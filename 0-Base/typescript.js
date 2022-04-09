@@ -13,6 +13,7 @@ var __extends = (this && this.__extends) || (function () {
         d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
     };
 })();
+// Base
 var a;
 a = "Hello World";
 console.log(a);
@@ -73,6 +74,7 @@ var person1 = new Person("Ahmet", 28, "0555555555");
 person1.showInfos();
 // console.log(person1.name); private
 console.log(person1.age);
+// Inheritance
 var Employee = /** @class */ (function (_super) {
     __extends(Employee, _super);
     function Employee(name, age, phone, salary) {
@@ -80,6 +82,10 @@ var Employee = /** @class */ (function (_super) {
         _this.salary = salary;
         return _this;
     }
+    Employee.prototype.showInfos = function () {
+        _super.prototype.showInfos.call(this);
+        console.log("Salary: ".concat(this.salary));
+    };
     Employee.prototype.changeDepartment = function (department) {
         console.log("Department changed to ".concat(department));
     };
@@ -88,3 +94,88 @@ var Employee = /** @class */ (function (_super) {
 var employee1 = new Employee("Ali", 28, "0555555555", 4000);
 employee1.showInfos();
 employee1.changeDepartment("IT");
+// Interface
+// interface IDatabase{
+//     add()
+//     get()
+//     delete()
+//     update()
+// }
+// class MySql implements IDatabase{
+//     add(){
+//         console.log("MySql add methodu çalıştı")
+//     }
+//     get(){
+//         console.log("MySql get methodu çalıştı")
+//     }
+//     delete(){
+//         console.log("MySql delete methodu çalıştı")
+//     }
+//     update(){
+//         console.log("MySql update methodu çalıştı")
+//     }
+// }
+// class MondoDB implements IDatabase{
+//     add(){
+//         console.log("MondoDB add methodu çalıştı")
+//     }
+//     get(){
+//         console.log("MondoDB get methodu çalıştı")
+//     }
+//     delete(){
+//         console.log("MondoDB delete methodu çalıştı")
+//     }
+//     update(){
+//         console.log("MondoDB update methodu çalıştı")
+//     }
+// }
+// let mySql = new MySql();
+// mySql.add();
+// function addDatabase(db:IDatabase){
+//     db.add();
+// }
+// addDatabase(new MySql());
+// addDatabase(new MondoDB());
+// Abstarct class
+var Database = /** @class */ (function () {
+    function Database() {
+    }
+    Database.prototype.get = function () {
+        console.log("abstractan get methodu çalıştı");
+    };
+    Database.prototype.add = function () {
+        console.log("abstractan add methodu çalıştı");
+    };
+    return Database;
+}());
+var MySql = /** @class */ (function (_super) {
+    __extends(MySql, _super);
+    function MySql() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MySql.prototype["delete"] = function () {
+        console.log("MySql delete methodu çalıştı");
+    };
+    MySql.prototype.update = function () {
+        console.log("MySql update methodu çalıştı");
+    };
+    return MySql;
+}(Database));
+var MondoDB = /** @class */ (function (_super) {
+    __extends(MondoDB, _super);
+    function MondoDB() {
+        return _super !== null && _super.apply(this, arguments) || this;
+    }
+    MondoDB.prototype["delete"] = function () {
+        console.log("MondoDB delete methodu çalıştı");
+    };
+    MondoDB.prototype.update = function () {
+        console.log("MondoDB update methodu çalıştı");
+    };
+    return MondoDB;
+}(Database));
+function AddDatabase(db) {
+    db["delete"]();
+}
+AddDatabase(new MySql());
+AddDatabase(new MondoDB());
